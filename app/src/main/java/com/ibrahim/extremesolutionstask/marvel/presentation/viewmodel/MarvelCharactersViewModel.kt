@@ -2,8 +2,8 @@ package com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.MarvelResponse
-import com.ibrahim.extremesolutionstask.marvel.data.model.character.Result
 import com.ibrahim.extremesolutionstask.marvel.domain.entity.MarvelParams
 import com.ibrahim.extremesolutionstask.marvel.domain.interactor.GetMarvelUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -49,7 +49,7 @@ class MarvelCharactersViewModel @Inject constructor(
 
     sealed class ForecastScreenState {
         object Loading : ForecastScreenState()
-        class SuccessAPIResponse(val data: List<Result>) : ForecastScreenState()
+        class SuccessAPIResponse(val data: List<Character>) : ForecastScreenState()
         class ErrorLoadingFromApi(val error: Throwable) : ForecastScreenState()
     }
 

@@ -8,12 +8,15 @@ import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.extremesolutionstask.R
-import com.ibrahim.extremesolutionstask.marvel.data.model.character.Result
+import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.FooterLoadingAdapter
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.ForecastAdapter
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.fragment.SearchFragment
+import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.CharactersSharedViewModel
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +34,10 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModel : MarvelCharactersViewModel
+
+    val charactersSharedViewModel by lazy {
+        ViewModelProvider(this).get(CharactersSharedViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +63,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openSearch() {
-//        search_input_text.setText("")
+        searchView.setQuery("" , false)
         cardView.visibility = View.VISIBLE
+        blurView.visibility = View.VISIBLE
         toolBar.visibility = View.INVISIBLE
         val circularReveal = ViewAnimationUtils.createCircularReveal(
                 cardView,
@@ -68,10 +76,16 @@ class MainActivity : AppCompatActivity() {
         circularReveal.duration = 500
         circularReveal.start()
 
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.flSearchResult , SearchFragment())
+                .addToBackStack("")
+                .commit()
     }
 
-
     private fun closeSearch() {
+        supportFragmentManager.popBackStack()
+        blurView.visibility = View.INVISIBLE
+
         val circularConceal = ViewAnimationUtils.createCircularReveal(
                 cardView,
                 (open_search_button.right + open_search_button.left) / 2,
@@ -88,14 +102,18 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator?) {
                 cardView.visibility = View.INVISIBLE
                 toolBar.visibility = View.VISIBLE
-//                search_input_text.setText("")
                 circularConceal.removeAllListeners()
             }
         })
     }
 
+    private fun onScrollToEnd(offSet: Int) {
+        //load next page
+        viewModel.getMarvelCharachters(offSet)
+    }
+
     private fun initRecyclerView() {
-        adapter = ForecastAdapter(ArrayList())
+        adapter = ForecastAdapter(ArrayList() , ::onScrollToEnd)
         concatAdapter = ConcatAdapter(adapter, footerAdapter)
 
         rvForecast.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
@@ -115,7 +133,10 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {return false}
+            override fun onQueryTextChange(newText: String?): Boolean {
+                charactersSharedViewModel.searchQueryLiveData.value = newText
+                return false
+            }
         })
 
     }
@@ -151,13 +172,11 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "handleErrorLoadingFromApi: ")
     }
 
-    private fun handleSuccess(data: List<Result>) {
+    private fun handleSuccess(data: List<Character>) {
         adapter.setList(data)
     }
 
     private fun handleLoadingVisibility(show: Boolean) {
-        progressBar.visibility = if (show) View.VISIBLE else View.GONE
-
         footerAdapter.setLoading(show)
     }
 

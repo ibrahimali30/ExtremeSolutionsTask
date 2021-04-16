@@ -1,8 +1,5 @@
 package com.ibrahim.extremesolutionstask.marvel.data.model.character
 
-import com.ibrahim.extremesolutionstask.marvel.data.model.character.Data
-
-
 data class MarvelResponse(
     val attributionHTML: String,
     val attributionText: String,

@@ -1,8 +1,8 @@
 package com.ibrahim.extremesolutionstask.marvel.data.source.remote
 
 import com.ibrahim.extremesolutionstask.base.PUBLIC_KEY
-import io.reactivex.Single
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.MarvelResponse
+import io.reactivex.Single
 import com.ibrahim.extremesolutionstask.marvel.data.model.details.DetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path

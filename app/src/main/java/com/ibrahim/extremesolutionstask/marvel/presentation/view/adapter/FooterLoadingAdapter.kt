@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ibrahim.extremesolutionstask.R
+import kotlinx.android.synthetic.main.item_list_loading.*
+import kotlinx.android.synthetic.main.item_list_loading.view.*
+
 
 class FooterLoadingAdapter : RecyclerView.Adapter<FooterWishListViewHolder>() {
-    private var footerItemSize = 0
+    private var footerItemSize = 1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FooterWishListViewHolder {
         return parent.let { LayoutInflater.from(it.context) }
             .inflate(R.layout.item_list_loading, parent, false)
@@ -16,24 +19,30 @@ class FooterLoadingAdapter : RecyclerView.Adapter<FooterWishListViewHolder>() {
     }
 
     override fun getItemCount() = footerItemSize
-    override fun onBindViewHolder(holder: FooterWishListViewHolder, position: Int) {}
 
-    fun showLoading() {
-        footerItemSize = 1
-        notifyDataSetChanged()
+    var holder: FooterWishListViewHolder? = null
+    override fun onBindViewHolder(holder: FooterWishListViewHolder, position: Int) {
+        this.holder = holder
     }
 
-    fun hideLoading() {
-        footerItemSize = 0
-        notifyDataSetChanged()
-    }
+
+
+
 
     fun setLoading(show: Boolean) {
         if (show)
-            showLoading()
+            holder?.showLoading()
         else
-            hideLoading()
+            holder?.hideLoading()
     }
 }
 
-class FooterWishListViewHolder(view: View) : RecyclerView.ViewHolder(view)
+class FooterWishListViewHolder(val view: View) : RecyclerView.ViewHolder(view){
+    fun showLoading() {
+        view.progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideLoading() {
+        view.progressBar.visibility = View.INVISIBLE
+    }
+}

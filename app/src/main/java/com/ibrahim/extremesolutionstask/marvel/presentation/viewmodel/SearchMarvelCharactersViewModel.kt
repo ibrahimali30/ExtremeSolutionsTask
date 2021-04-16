@@ -2,8 +2,8 @@ package com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.MarvelResponse
-import com.ibrahim.extremesolutionstask.marvel.data.model.character.Result
 import com.ibrahim.extremesolutionstask.marvel.domain.entity.MarvelParams
 import com.ibrahim.extremesolutionstask.marvel.domain.interactor.GetMarvelUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -47,12 +47,13 @@ class SearchMarvelCharactersViewModel @Inject constructor(
 
     sealed class SearchScreenState {
         object Loading : SearchScreenState()
-        class SuccessAPIResponse(val data: List<Result>) : SearchScreenState()
+        class SuccessAPIResponse(val data: List<Character>) : SearchScreenState()
         class ErrorLoadingFromApi(val error: Throwable) : SearchScreenState()
     }
 
     override fun onCleared() {
         compositeDisposable.dispose()
+        screenState.value = SearchScreenState.Loading
         super.onCleared()
     }
 }

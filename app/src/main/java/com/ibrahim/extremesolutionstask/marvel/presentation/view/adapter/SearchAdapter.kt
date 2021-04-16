@@ -13,8 +13,8 @@ import com.ibrahim.extremesolutionstask.marvel.data.model.character.Thumbnail
 import kotlinx.android.synthetic.main.item_marver_character.view.*
 import kotlin.collections.ArrayList
 
-class ForecastAdapter(val data: ArrayList<Character>, val function: (size:Int) -> Unit = {}) :
-    RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
+class SearchAdapter(val data: ArrayList<Character>, val function: (size:Int) -> Unit = {}) :
+    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(

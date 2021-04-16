@@ -1,6 +1,6 @@
 package com.ibrahim.extremesolutionstask.marvel.data.model.character
 
-data class Characters(
+data class Comics(
     val available: Int,
     val collectionURI: String,
     val items: List<Item>,

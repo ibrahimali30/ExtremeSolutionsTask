@@ -1,6 +1,7 @@
 package com.ibrahim.extremesolutionstask.marvel.data.model.character
 
-data class Variant(
+data class ItemXXX(
     val name: String,
-    val resourceURI: String
+    val resourceURI: String,
+    val type: String
 )
