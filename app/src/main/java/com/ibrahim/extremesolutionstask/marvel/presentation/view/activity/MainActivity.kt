@@ -6,14 +6,15 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Result
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.FooterLoadingAdapter
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.ForecastAdapter
-import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.ForecastViewModel
+import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.layout_error_view.*
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -24,8 +25,11 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var adapter: ForecastAdapter
 
+    private lateinit var concatAdapter: ConcatAdapter
+    private var footerAdapter = FooterLoadingAdapter()
+
     @Inject
-    lateinit var viewModel : ForecastViewModel
+    lateinit var viewModel : MarvelCharactersViewModel
 
 
 
@@ -37,15 +41,16 @@ class MainActivity : AppCompatActivity() {
         initSearchView()
         initRecyclerView()
 
+        viewModel.getMarvelCharachters()
+
     }
 
     private fun initRecyclerView() {
-        adapter =
-            ForecastAdapter(
-                ArrayList()
-            )
+        adapter = ForecastAdapter(ArrayList())
+        concatAdapter = ConcatAdapter(adapter, footerAdapter)
+
         rvForecast.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-        rvForecast.adapter = adapter
+        rvForecast.adapter = concatAdapter
     }
 
     private fun initSearchView() {
@@ -57,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 adapter.clear()
-                viewModel.getForecast(searchView.query.toString())
+                viewModel.getMarvelCharachters()
                 return false
             }
 
@@ -72,22 +77,22 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun onScreenStateChanged(state: ForecastViewModel.ForecastScreenState?) {
+    private fun onScreenStateChanged(state: MarvelCharactersViewModel.ForecastScreenState?) {
         Log.d(TAG, "onScreenStateChanged: ${state.toString()}")
 
         when (state) {
-            is ForecastViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
-            is ForecastViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
+            is MarvelCharactersViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
+            is MarvelCharactersViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
             else -> {}
         }
 
-        handleLoadingVisibility(state == ForecastViewModel.ForecastScreenState.Loading)
+        handleLoadingVisibility(state == MarvelCharactersViewModel.ForecastScreenState.Loading)
         handleErrorViewsVisibility(state)
 
     }
 
-    private fun handleErrorViewsVisibility(state: ForecastViewModel.ForecastScreenState?) {
-        if (state is ForecastViewModel.ForecastScreenState.ErrorLoadingFromApi)
+    private fun handleErrorViewsVisibility(state: MarvelCharactersViewModel.ForecastScreenState?) {
+        if (state is MarvelCharactersViewModel.ForecastScreenState.ErrorLoadingFromApi)
             errorViewLayout.visibility = View.VISIBLE
         else
             errorViewLayout.visibility = View.GONE
@@ -105,6 +110,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleLoadingVisibility(show: Boolean) {
         progressBar.visibility = if (show) View.VISIBLE else View.GONE
+
+        footerAdapter.setLoading(show)
     }
 
 

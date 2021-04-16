@@ -12,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
-class ForecastViewModel @Inject constructor(
+class MarvelCharactersViewModel @Inject constructor(
         private val refreshForecastUseCase: GetMarvelUseCase
 ): ViewModel() {
 
@@ -20,10 +20,14 @@ class ForecastViewModel @Inject constructor(
 
     val screenState by lazy { MutableLiveData<ForecastScreenState>() }
 
-    fun getForecast(cityName: String) {
-        screenState.value = ForecastScreenState.Loading
+    var offset: Int = -1
+    fun getMarvelCharachters( offset: Int = 0) {
+        if (offset == this.offset) return
 
-        refreshForecastUseCase.fetchMarvel(MarvelParams())
+        screenState.value = ForecastScreenState.Loading
+        val params = MarvelParams(offset = offset)
+
+        refreshForecastUseCase.fetchMarvel(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

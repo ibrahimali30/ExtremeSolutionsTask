@@ -17,25 +17,27 @@ class MarvelRemoteDataSource @Inject constructor(
      fun fetchMarvel(params: MarvelParams): Single<MarvelResponse> {
          val ts = getTimestamp()
          return marvelApiService.getMarvel(
-             ts = ts,
-             hash = hash(ts + PRIVATE_KEY + PUBLIC_KEY)
+                 apikey = params.apikey,
+                 ts = ts,
+                 hash = getMD5hash(ts + PRIVATE_KEY + PUBLIC_KEY),
+                 offset = params.offset,
+                 nameStartsWith = params.nameStartsWith
          )
      }
 
 
     private fun getTimestamp(): String {
-        val tsLong = System.currentTimeMillis() / 1000
-        return tsLong.toString()
+        return (System.currentTimeMillis() / 1000).toString()
     }
 
-    fun hash(s: String): String {
-        var m: MessageDigest? = null
+    fun getMD5hash(s: String): String {
+        var messageDigest: MessageDigest? = null
         try {
-            m = MessageDigest.getInstance("MD5")
+            messageDigest = MessageDigest.getInstance("MD5")
         } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace()
         }
-        m!!.update(s.toByteArray(), 0, s.length)
-        return BigInteger(1, m!!.digest()).toString(16)
+        messageDigest!!.update(s.toByteArray(), 0, s.length)
+        return BigInteger(1, messageDigest!!.digest()).toString(16)
     }
 }

@@ -15,6 +15,8 @@ interface MarvelApiService {
         @Query("ts") ts:String = "",
         @Query("apikey") apikey:String = PUBLIC_KEY,
         @Query("hash") hash:String = "",
+        @Query("nameStartsWith") nameStartsWith:String? = null,
+        @Query("offset") offset:Int = 0,
         @Query("limit") limit:Int = 5
     ): Single<MarvelResponse>
 

@@ -1,6 +1,13 @@
 package com.ibrahim.extremesolutionstask.marvel.domain.entity
 
+import com.ibrahim.extremesolutionstask.base.PUBLIC_KEY
+
 
 data class MarvelParams(
-    val s:String = ""
-)
+         var apikey:String = PUBLIC_KEY,
+         var nameStartsWith:String? = null,
+         var offset:Int = 0,
+         var limit:Int = 5
+){
+
+}
