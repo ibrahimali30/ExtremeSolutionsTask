@@ -1,8 +1,10 @@
 package com.ibrahim.extremesolutionstask.marvel.presentation.view.activity
 
+import android.animation.Animator
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -23,15 +25,12 @@ class MainActivity : AppCompatActivity() {
 
     val TAG = "Looog"
 
-    lateinit var adapter: ForecastAdapter
-
+    private lateinit var adapter: ForecastAdapter
     private lateinit var concatAdapter: ConcatAdapter
     private var footerAdapter = FooterLoadingAdapter()
 
     @Inject
     lateinit var viewModel : MarvelCharactersViewModel
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +39,59 @@ class MainActivity : AppCompatActivity() {
         observeScreenState()
         initSearchView()
         initRecyclerView()
+        initViews()
 
         viewModel.getMarvelCharachters()
 
+    }
+
+    private fun initViews() {
+        textView.setOnClickListener {
+            closeSearch()
+        }
+
+        open_search_button.setOnClickListener {
+            openSearch()
+        }
+    }
+
+    private fun openSearch() {
+//        search_input_text.setText("")
+        cardView.visibility = View.VISIBLE
+        toolBar.visibility = View.INVISIBLE
+        val circularReveal = ViewAnimationUtils.createCircularReveal(
+                cardView,
+                (open_search_button.right + open_search_button.left) / 2,
+                (open_search_button.top + open_search_button.bottom) / 2,
+                0f, searchView.width.toFloat()
+        )
+        circularReveal.duration = 500
+        circularReveal.start()
+
+    }
+
+
+    private fun closeSearch() {
+        val circularConceal = ViewAnimationUtils.createCircularReveal(
+                cardView,
+                (open_search_button.right + open_search_button.left) / 2,
+                (open_search_button.top + open_search_button.bottom) / 2,
+                searchView.width.toFloat(), 0f
+        )
+
+        circularConceal.duration = 500
+        circularConceal.start()
+        circularConceal.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) = Unit
+            override fun onAnimationCancel(animation: Animator?) = Unit
+            override fun onAnimationStart(animation: Animator?) = Unit
+            override fun onAnimationEnd(animation: Animator?) {
+                cardView.visibility = View.INVISIBLE
+                toolBar.visibility = View.VISIBLE
+//                search_input_text.setText("")
+                circularConceal.removeAllListeners()
+            }
+        })
     }
 
     private fun initRecyclerView() {
@@ -78,8 +127,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onScreenStateChanged(state: MarvelCharactersViewModel.ForecastScreenState?) {
-        Log.d(TAG, "onScreenStateChanged: ${state.toString()}")
-
         when (state) {
             is MarvelCharactersViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
             is MarvelCharactersViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
