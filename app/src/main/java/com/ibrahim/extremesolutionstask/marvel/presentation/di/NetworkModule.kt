@@ -1,4 +1,4 @@
-package com.ibrahim.extremesolutionstask.marvel.di
+package com.ibrahim.extremesolutionstask.marvel.presentation.di
 
 import com.google.gson.GsonBuilder
 import dagger.Module

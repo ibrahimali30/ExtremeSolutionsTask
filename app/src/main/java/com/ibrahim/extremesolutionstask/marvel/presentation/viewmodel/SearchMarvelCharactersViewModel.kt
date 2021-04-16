@@ -18,11 +18,11 @@ class SearchMarvelCharactersViewModel @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    val screenState by lazy { MutableLiveData<ForecastScreenState>() }
+    val screenState by lazy { MutableLiveData<SearchScreenState>() }
 
     fun getMarvelCharachters(name: String = "") {
 
-        screenState.value = ForecastScreenState.Loading
+        screenState.value = SearchScreenState.Loading
         val params = MarvelParams(nameStartsWith = name)
 
         refreshForecastUseCase.fetchMarvel(params)
@@ -37,18 +37,18 @@ class SearchMarvelCharactersViewModel @Inject constructor(
 
 
     fun handleErrorResponse(it: Throwable) {
-        screenState.value = ForecastScreenState.ErrorLoadingFromApi(it)
+        screenState.value = SearchScreenState.ErrorLoadingFromApi(it)
     }
 
     private fun handleSuccessResponse(it: MarvelResponse) {
-        screenState.value = ForecastScreenState.SuccessAPIResponse(it.data.results)
+        screenState.value = SearchScreenState.SuccessAPIResponse(it.data.results)
     }
 
 
-    sealed class ForecastScreenState {
-        object Loading : ForecastScreenState()
-        class SuccessAPIResponse(val data: List<Result>) : ForecastScreenState()
-        class ErrorLoadingFromApi(val error: Throwable) : ForecastScreenState()
+    sealed class SearchScreenState {
+        object Loading : SearchScreenState()
+        class SuccessAPIResponse(val data: List<Result>) : SearchScreenState()
+        class ErrorLoadingFromApi(val error: Throwable) : SearchScreenState()
     }
 
     override fun onCleared() {
