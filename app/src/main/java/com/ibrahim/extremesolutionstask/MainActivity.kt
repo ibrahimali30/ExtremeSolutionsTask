@@ -28,43 +28,29 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        callApi()
+//        callApi()
 
     }
 
-    @SuppressLint("CheckResult")
-    private fun callApi() {
-        val ts = getTimestamp()
+//    @SuppressLint("CheckResult")
+//    private fun callApi() {
+//        val ts = getTimestamp()
+//
+//        marvelApiService.getMarvel(
+//            ts = ts,
+//            hash = hash(ts+PRIVATE_KEY+PUBLIC_KEY)
+//        )
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(
+//                {
+//                    Log.d(TAG, "onCreate: $it")
+//                },
+//                {
+//                    Log.d(TAG, "callApi: $it")
+//                }
+//            )
+//    }
 
-        marvelApiService.getMarvel(
-            ts = ts,
-            hash = hash(ts+PRIVATE_KEY+PUBLIC_KEY)
-        )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    Log.d(TAG, "onCreate: $it")
-                },
-                {
-                    Log.d(TAG, "callApi: $it")
-                }
-            )
-    }
 
-    private fun getTimestamp(): String {
-        val tsLong = System.currentTimeMillis() / 1000
-        return tsLong.toString()
-    }
-
-    fun hash(s: String): String {
-        var m: MessageDigest? = null
-        try {
-            m = MessageDigest.getInstance("MD5")
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        }
-        m!!.update(s.toByteArray(), 0, s.length)
-        return BigInteger(1, m!!.digest()).toString(16)
-    }
 }
