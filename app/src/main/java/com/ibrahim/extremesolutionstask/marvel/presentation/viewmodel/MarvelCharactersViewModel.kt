@@ -22,11 +22,11 @@ class MarvelCharactersViewModel @Inject constructor(
 
     var offset: Int = -1
     fun getMarvelCharachters( offset: Int = 0) {
-        if (offset == this.offset) return
+        if (this.offset == offset) return
+        this.offset = offset
 
         screenState.value = ForecastScreenState.Loading
         val params = MarvelParams(offset = offset)
-
         refreshForecastUseCase.fetchMarvel(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

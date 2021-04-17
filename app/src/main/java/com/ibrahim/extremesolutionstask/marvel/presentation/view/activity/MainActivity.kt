@@ -67,6 +67,10 @@ class MainActivity : AppCompatActivity() {
         cardView.visibility = View.VISIBLE
         blurView.visibility = View.VISIBLE
         toolBar.visibility = View.INVISIBLE
+        searchView.isActivated = true
+        searchView.setIconifiedByDefault(false)
+        searchView.isIconified = false
+        
         val circularReveal = ViewAnimationUtils.createCircularReveal(
                 cardView,
                 (open_search_button.right + open_search_button.left) / 2,
@@ -121,15 +125,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSearchView() {
-
-        searchView.isActivated = true
-        searchView.setIconifiedByDefault(false)
-        searchView.isIconified = false
         
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                adapter.clear()
-                viewModel.getMarvelCharachters()
                 return false
             }
 
