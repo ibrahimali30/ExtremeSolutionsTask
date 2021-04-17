@@ -1,12 +1,14 @@
 package com.ibrahim.extremesolutionstask.marvel.presentation.view.activity
 
 import android.animation.Animator
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
@@ -20,8 +22,9 @@ import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.Characters
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.ArrayList
+import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -70,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         searchView.isActivated = true
         searchView.setIconifiedByDefault(false)
         searchView.isIconified = false
-        
+
         val circularReveal = ViewAnimationUtils.createCircularReveal(
                 cardView,
                 (open_search_button.right + open_search_button.left) / 2,
@@ -111,13 +114,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun onItemClicked(character: Character, viewToTransition: View) {
+        MarvelCharacterDetailsActivity.startCallingIntent(character, this, viewToTransition)
+    }
+
     private fun onScrollToEnd(offSet: Int) {
         //load next page
         viewModel.getMarvelCharachters(offSet)
     }
 
     private fun initRecyclerView() {
-        adapter = ForecastAdapter(ArrayList() , ::onScrollToEnd)
+        adapter = ForecastAdapter(ArrayList() , ::onScrollToEnd, ::onItemClicked)
         concatAdapter = ConcatAdapter(adapter, footerAdapter)
 
         rvForecast.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)

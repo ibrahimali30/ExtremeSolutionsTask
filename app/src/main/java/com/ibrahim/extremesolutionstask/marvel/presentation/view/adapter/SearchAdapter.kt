@@ -59,7 +59,7 @@ class SearchAdapter(val data: ArrayList<Character>, val function: (size:Int) -> 
         private fun bindThmbnail(thumbnail: Thumbnail) {
             val requestOptions = RequestOptions()
             val glideApp = Glide.with(itemView)
-                .load(thumbnail.path + "." + thumbnail.extension)
+                .load(thumbnail.getFullThumbnail())
 
             glideApp.apply(requestOptions)
                     .apply(RequestOptions().transform(RoundedCorners(10)))

@@ -1,15 +1,17 @@
 package com.ibrahim.extremesolutionstask.marvel.data.model.character
 
+import java.io.Serializable
+
 data class Character(
-    val comics: Comics,
-    val description: String,
-    val events: Events,
     val id: Int,
     val modified: String,
     val name: String,
+    val description: String,
     val resourceURI: String,
+    val comics: Series,
+    val events: Series,
     val series: Series,
-    val stories: Stories,
+    val stories: Series,
     val thumbnail: Thumbnail,
     val urls: List<Url>
-)
+): Serializable
