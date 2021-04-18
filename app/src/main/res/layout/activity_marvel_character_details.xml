@@ -8,18 +8,33 @@
 
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:background="#000"
         android:transitionName="tr"
         android:id="@+id/ivTopImagePoster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="300dp"
         android:scaleType="fitXY"
-        tools:src="@drawable/mcu_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivTopImagePoster">
+
+
+        <LinearLayout
+            android:background="#000"
+            android:id="@+id/llVodRowFragmentContainers"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical" />
+
+    </androidx.core.widget.NestedScrollView>
 
 
 

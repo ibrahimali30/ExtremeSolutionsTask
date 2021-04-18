@@ -25,6 +25,17 @@ class MarvelRemoteDataSource @Inject constructor(
          )
      }
 
+     fun fetchMarvelSubCategories(params: MarvelParams): Single<MarvelResponse> {
+         val ts = getTimestamp()
+         return marvelApiService.getMarvelDetails(
+             apikey = params.apikey,
+             ts = ts,
+             hash = getMD5hash(ts + PRIVATE_KEY + PUBLIC_KEY),
+             id = params.id,
+             category = params.category
+         )
+     }
+
 
     private fun getTimestamp(): String {
         return (System.currentTimeMillis() / 1000).toString()

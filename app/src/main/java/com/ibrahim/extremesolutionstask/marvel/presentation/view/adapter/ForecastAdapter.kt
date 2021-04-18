@@ -65,7 +65,8 @@ class ForecastAdapter(
             view.tvItemTitle.text = model.name
         }
 
-        private fun bindThmbnail(thumbnail: Thumbnail) {
+        private fun bindThmbnail(thumbnail: Thumbnail?) {
+            thumbnail ?: return
             val requestOptions = RequestOptions()
             val glideApp = Glide.with(view)
                 .load(thumbnail.path + "." + thumbnail.extension)

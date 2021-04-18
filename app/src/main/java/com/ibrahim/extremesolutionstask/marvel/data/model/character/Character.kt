@@ -8,10 +8,10 @@ data class Character(
     val name: String,
     val description: String,
     val resourceURI: String,
-    val comics: Series,
-    val events: Series,
-    val series: Series,
-    val stories: Series,
-    val thumbnail: Thumbnail,
+    val comics: SubCategory,
+    val events: SubCategory,
+    val series: SubCategory,
+    val stories: SubCategory,
+    val thumbnail: Thumbnail?,
     val urls: List<Url>
 ): Serializable

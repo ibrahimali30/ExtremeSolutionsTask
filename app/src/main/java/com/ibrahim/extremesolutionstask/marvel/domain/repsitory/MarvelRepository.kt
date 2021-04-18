@@ -7,4 +7,5 @@ import io.reactivex.Single
 
 interface MarvelRepository {
     fun fetchMarvel(cityName: MarvelParams): Single<MarvelResponse>
+    fun fetchMarvelSubCategories(cityName: MarvelParams): Single<MarvelResponse>
 }

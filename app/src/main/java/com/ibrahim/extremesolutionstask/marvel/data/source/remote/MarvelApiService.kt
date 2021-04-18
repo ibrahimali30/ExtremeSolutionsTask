@@ -28,10 +28,10 @@ interface MarvelApiService {
         @Query("ts") ts:String = "",
         @Query("apikey") apikey:String = PUBLIC_KEY,
         @Query("hash") hash:String = "",
-        @Query("limit") limit:Int = 5,
+        @Query("limit") limit:Int = 10,
 
 
-    ): Single<DetailsResponse>
+    ): Single<MarvelResponse>
 
 }
 

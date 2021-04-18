@@ -56,7 +56,8 @@ class SearchAdapter(val data: ArrayList<Character>, val function: (size:Int) -> 
             itemView.tvItemTitle.text = model.name
         }
 
-        private fun bindThmbnail(thumbnail: Thumbnail) {
+        private fun bindThmbnail(thumbnail: Thumbnail?) {
+            thumbnail ?: return
             val requestOptions = RequestOptions()
             val glideApp = Glide.with(itemView)
                 .load(thumbnail.getFullThumbnail())

@@ -1,14 +1,12 @@
 package com.ibrahim.extremesolutionstask.marvel.presentation.view.activity
 
 import android.animation.Animator
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
@@ -152,20 +150,20 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun onScreenStateChanged(state: MarvelCharactersViewModel.ForecastScreenState?) {
+    private fun onScreenStateChanged(state: MarvelCharactersViewModel.ScreenState?) {
         when (state) {
-            is MarvelCharactersViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
-            is MarvelCharactersViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
+            is MarvelCharactersViewModel.ScreenState.SuccessAPIResponse -> handleSuccess(state.data)
+            is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
             else -> {}
         }
 
-        handleLoadingVisibility(state == MarvelCharactersViewModel.ForecastScreenState.Loading)
+        handleLoadingVisibility(state == MarvelCharactersViewModel.ScreenState.Loading)
         handleErrorViewsVisibility(state)
 
     }
 
-    private fun handleErrorViewsVisibility(state: MarvelCharactersViewModel.ForecastScreenState?) {
-        if (state is MarvelCharactersViewModel.ForecastScreenState.ErrorLoadingFromApi)
+    private fun handleErrorViewsVisibility(state: MarvelCharactersViewModel.ScreenState?) {
+        if (state is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi)
             errorViewLayout.visibility = View.VISIBLE
         else
             errorViewLayout.visibility = View.GONE
