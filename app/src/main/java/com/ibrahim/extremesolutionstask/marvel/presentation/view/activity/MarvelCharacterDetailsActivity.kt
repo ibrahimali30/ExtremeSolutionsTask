@@ -43,30 +43,22 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
             .load(charachter.thumbnail?.getFullThumbnail())
             .into(ivTopImagePoster)
 
+        tvListTitle.text = charachter.getCharacterTitle()
+        tvCharacterDescription.text = charachter.description
 
 
-        charachter.comics.let {
-            addListFragment("comics", charachter.id.toString() , 1)
-        }
+        addListFragment("comics", charachter.id.toString() , 1)
+        addListFragment("events", charachter.id.toString() , 2)
+        addListFragment("series", charachter.id.toString() , 3)
+        addListFragment("stories", charachter.id.toString() , 4)
 
-        charachter.events.let {
-            addListFragment("events", charachter.id.toString() , 2)
-        }
-
-        charachter.series.let {
-            addListFragment("series", charachter.id.toString() , 3)
-        }
-
-        charachter.stories.let {
-            addListFragment("stories", charachter.id.toString() , 4)
-        }
 
     }
 
 
     private fun addListFragment(name: String, id: String, tag: Int) {
         val containerFrameLayout = FrameLayout(this)
-        containerFrameLayout.id = tag + 1
+        containerFrameLayout.id = tag
         containerFrameLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         llVodRowFragmentContainers.addView(containerFrameLayout)
 

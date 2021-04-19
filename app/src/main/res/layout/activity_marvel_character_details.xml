@@ -32,7 +32,36 @@
             android:id="@+id/llVodRowFragmentContainers"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+
+
+            <TextView
+                android:id="@+id/tvListTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/teal_200"
+                android:textStyle="bold"
+                tools:text="Series"
+                />
+
+
+            <TextView
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/tvCharacterDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Join 3-D MAN, CLOUD 9, KOMODO, HARDBALL, and heroes around America in the battle that will decide the fate of the planet and the future of the Initiative program. Will the Kill Krew Army win the day?"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flWatchListTitle"/>
+
+
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
