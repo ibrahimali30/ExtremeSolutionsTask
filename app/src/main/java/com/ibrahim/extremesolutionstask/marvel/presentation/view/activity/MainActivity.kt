@@ -1,13 +1,9 @@
 package com.ibrahim.extremesolutionstask.marvel.presentation.view.activity
 
-import android.animation.Animator
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
@@ -16,7 +12,9 @@ import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.FooterLoadingAdapter
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.ForecastAdapter
-import com.ibrahim.extremesolutionstask.marvel.presentation.view.fragment.SearchFragment
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.closeSearch
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.openSearch
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.setOnTextChanged
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.CharactersSharedViewModel
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,55 +63,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openSearch() {
-        searchView.setQuery("" , false)
-        cardView.visibility = View.VISIBLE
-        blurView.visibility = View.VISIBLE
-        toolBar.visibility = View.INVISIBLE
-        searchView.isActivated = true
-        searchView.setIconifiedByDefault(false)
-        searchView.isIconified = false
-
-        val circularReveal = ViewAnimationUtils.createCircularReveal(
-                cardView,
-                (open_search_button.right + open_search_button.left) / 2,
-                (open_search_button.top + open_search_button.bottom) / 2,
-                0f, searchView.width.toFloat()
-        )
-        circularReveal.duration = 500
-        circularReveal.start()
-
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.flSearchResult , SearchFragment())
-                .addToBackStack("")
-                .commit()
-    }
-
-    private fun closeSearch() {
-        supportFragmentManager.popBackStack()
-        blurView.visibility = View.INVISIBLE
-
-        val circularConceal = ViewAnimationUtils.createCircularReveal(
-                cardView,
-                (open_search_button.right + open_search_button.left) / 2,
-                (open_search_button.top + open_search_button.bottom) / 2,
-                searchView.width.toFloat(), 0f
-        )
-
-        circularConceal.duration = 500
-        circularConceal.start()
-        circularConceal.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) = Unit
-            override fun onAnimationCancel(animation: Animator?) = Unit
-            override fun onAnimationStart(animation: Animator?) = Unit
-            override fun onAnimationEnd(animation: Animator?) {
-                cardView.visibility = View.INVISIBLE
-                toolBar.visibility = View.VISIBLE
-                circularConceal.removeAllListeners()
-            }
-        })
-    }
-
     private fun onItemClicked(character: Character, viewToTransition: View, viewToTransition2: View) {
         MarvelCharacterDetailsActivity.startCallingIntent(character, this, viewToTransition, viewToTransition2)
     }
@@ -126,24 +75,14 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         adapter = ForecastAdapter(ArrayList() , ::onScrollToEnd, ::onItemClicked)
         concatAdapter = ConcatAdapter(adapter, footerAdapter)
-
         rvForecast.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         rvForecast.adapter = concatAdapter
     }
 
     private fun initSearchView() {
-        
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                charactersSharedViewModel.searchQueryLiveData.value = newText
-                return false
-            }
-        })
-
+        searchView.setOnTextChanged{newText ->
+            charactersSharedViewModel.searchQueryLiveData.value = newText
+        }
     }
 
     private fun observeScreenState() {
@@ -154,35 +93,38 @@ class MainActivity : AppCompatActivity() {
 
     private fun onScreenStateChanged(state: MarvelCharactersViewModel.ScreenState?) {
         when (state) {
+            is MarvelCharactersViewModel.ScreenState.Loading -> handleLoadingVisibility()
             is MarvelCharactersViewModel.ScreenState.SuccessAPIResponse -> handleSuccess(state.data)
             is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
             else -> {}
         }
 
-        handleLoadingVisibility(state == MarvelCharactersViewModel.ScreenState.Loading)
-        handleErrorViewsVisibility(state)
+//        handleLoadingVisibility(state == MarvelCharactersViewModel.ScreenState.Loading)
+//        handleErrorViewsVisibility(state)
 
     }
 
     private fun handleErrorViewsVisibility(state: MarvelCharactersViewModel.ScreenState?) {
-        if (state is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi)
-            errorViewLayout.visibility = View.VISIBLE
-        else
-            errorViewLayout.visibility = View.GONE
+//        if (state is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi)
+//            errorViewLayout.visibility = View.VISIBLE
+//        else
+//            errorViewLayout.visibility = View.GONE
 
     }
 
 
     private fun handleErrorLoadingFromApi(error: Throwable) {
-        Log.d(TAG, "handleErrorLoadingFromApi: ")
+        footerAdapter.showError{
+            viewModel.getMarvelCharachters(adapter.data.size)
+        }
     }
 
     private fun handleSuccess(data: List<Character>) {
         adapter.setList(data)
     }
 
-    private fun handleLoadingVisibility(show: Boolean) {
-        footerAdapter.setLoading(show)
+    private fun handleLoadingVisibility() {
+        footerAdapter.setLoading()
     }
 
 

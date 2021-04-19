@@ -5,25 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="100dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <TextView
         android:id="@+id/tvDay"
+        android:textColor="@color/white"
+        tools:textColor="@color/black"
+        android:layout_marginTop="32dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Something went wrong"
-        android:textSize="32sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="120dp"
         android:layout_marginHorizontal="32dp"/>
 
 
     <Button
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="8dp"
         android:id="@+id/btRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

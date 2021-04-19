@@ -10,6 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import java.lang.Exception
 import javax.inject.Inject
 
 class MarvelCharactersViewModel @Inject constructor(
@@ -21,6 +22,7 @@ class MarvelCharactersViewModel @Inject constructor(
     val screenState by lazy { MutableLiveData<ScreenState>() }
 
     var offset: Int = -1
+    var f = true
     fun getMarvelCharachters( offset: Int = 0) {
         if (this.offset == offset) return
         this.offset = offset
@@ -31,8 +33,15 @@ class MarvelCharactersViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    if (f){
+                        this.offset = -1
+                        this.f = false
+                        handleErrorResponse(Exception())
+                        return@subscribe
+                    }
                     handleSuccessResponse(it)
                 }, {
+                    this.offset = -1
                     handleErrorResponse(it)
                 }).addTo(compositeDisposable)
     }
