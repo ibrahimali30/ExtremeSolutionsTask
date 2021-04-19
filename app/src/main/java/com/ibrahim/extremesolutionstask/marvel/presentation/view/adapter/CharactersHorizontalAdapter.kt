@@ -10,14 +10,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Thumbnail
-import kotlinx.android.synthetic.main.item_marvel_character_discovery.view.*
+import kotlinx.android.synthetic.main.item_marver_character_horizontal.view.*
 import kotlin.collections.ArrayList
 
-class ForecastAdapter(
-    val data: ArrayList<Character>,
-    val function: (size: Int) -> Unit = {},
-    val onItemClicked: (character: Character, viewToTransition: View) -> Unit
-) : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
+class CharactersHorizontalAdapter(val data: ArrayList<Character>, val function: (size:Int) -> Unit = {}) :
+    RecyclerView.Adapter<CharactersHorizontalAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(
@@ -26,7 +23,7 @@ class ForecastAdapter(
     ): ViewHolder {
         val view =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_marvel_character_discovery, parent, false)
+                .inflate(R.layout.item_marver_character_horizontal, parent, false)
         return ViewHolder(
             view
         )
@@ -38,13 +35,8 @@ class ForecastAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
-
         if (position > data.size - 4) {
             function(data.size)
-        }
-
-        holder.itemView.setOnClickListener {
-            onItemClicked(data[position] , holder.view)
         }
     }
 
@@ -58,24 +50,23 @@ class ForecastAdapter(
         notifyDataSetChanged()
     }
 
-    class ViewHolder constructor(val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(model: Character) {
             bindThmbnail(model.thumbnail)
-            view.tvItemTitle.text = model.getCharacterTitle()
+            itemView.tvItemTitle.text = model.getCharacterTitle()
         }
 
         private fun bindThmbnail(thumbnail: Thumbnail?) {
             thumbnail ?: return
             val requestOptions = RequestOptions()
-            val glideApp = Glide.with(view)
-                .load(thumbnail.path + "." + thumbnail.extension)
+            val glideApp = Glide.with(itemView)
+                .load(thumbnail.getFullThumbnail())
 
             glideApp.apply(requestOptions)
                 .apply(RequestOptions().transform(RoundedCorners(10)))
                 .placeholder(R.drawable.bg_search_radius)
-                .into(view.ivPoster)
+                .into(itemView.ivPoster)
         }
-
     }
 }

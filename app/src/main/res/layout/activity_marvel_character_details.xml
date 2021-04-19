@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/window_bg"
     tools:context=".marvel.presentation.view.activity.MarvelCharacterDetailsActivity">
 
 
@@ -28,7 +29,6 @@
 
 
         <LinearLayout
-            android:background="#000"
             android:id="@+id/llVodRowFragmentContainers"
             android:layout_width="match_parent"
             android:layout_height="100dp"

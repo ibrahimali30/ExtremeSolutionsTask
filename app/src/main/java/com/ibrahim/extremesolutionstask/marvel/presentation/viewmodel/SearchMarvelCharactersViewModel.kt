@@ -21,10 +21,10 @@ class SearchMarvelCharactersViewModel @Inject constructor(
     val screenState by lazy { MutableLiveData<SearchScreenState>() }
 
     fun getMarvelCharachters(name: String = "") {
-
+        //avoid duplicate
         screenState.value = SearchScreenState.Loading
-        val params = MarvelParams(nameStartsWith = name)
 
+        val params = MarvelParams(nameStartsWith = name)
         refreshForecastUseCase.fetchMarvel(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -36,7 +36,7 @@ class SearchMarvelCharactersViewModel @Inject constructor(
     }
 
 
-    fun handleErrorResponse(it: Throwable) {
+    private fun handleErrorResponse(it: Throwable) {
         screenState.value = SearchScreenState.ErrorLoadingFromApi(it)
     }
 

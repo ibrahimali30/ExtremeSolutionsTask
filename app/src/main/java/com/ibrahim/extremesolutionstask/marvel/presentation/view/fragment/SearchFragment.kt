@@ -49,6 +49,7 @@ class SearchFragment: Fragment() {
     private fun initSearchView() {
         charactersSharedViewModel.searchQueryLiveData.observe(viewLifecycleOwner , Observer {
             adapter.clear()
+            adapter.searchQuery = it
             viewModel.getMarvelCharachters(it)
         })
     }

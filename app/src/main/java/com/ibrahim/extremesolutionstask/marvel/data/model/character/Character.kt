@@ -5,7 +5,8 @@ import java.io.Serializable
 data class Character(
     val id: Int,
     val modified: String,
-    val name: String,
+    val name: String?,
+    val title: String?,
     val description: String,
     val resourceURI: String,
     val comics: SubCategory,
@@ -14,4 +15,6 @@ data class Character(
     val stories: SubCategory,
     val thumbnail: Thumbnail?,
     val urls: List<Url>
-): Serializable
+): Serializable{
+    fun getCharacterTitle() = name ?: title ?: ""
+}
