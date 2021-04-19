@@ -7,9 +7,9 @@ import androidx.appcompat.widget.SearchView
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MainActivity
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.fragment.SearchFragment
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_scrolling.*
 
- fun MainActivity.openSearch() {
+fun MainActivity.openSearch() {
     searchView.setQuery("" , false)
     cardView.visibility = View.VISIBLE
     blurView.visibility = View.VISIBLE
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
         (open_search_button.top + open_search_button.bottom) / 2,
         0f, searchView.width.toFloat()
     )
-    circularReveal.duration = 500
+    circularReveal.duration = 300
     circularReveal.start()
 
     supportFragmentManager.beginTransaction()
@@ -60,7 +60,7 @@ fun SearchView.setOnTextChanged(function: (quertText:String) -> Unit) {
         searchView.width.toFloat(), 0f
     )
 
-    circularConceal.duration = 500
+    circularConceal.duration = 300
     circularConceal.start()
     circularConceal.addListener(object : Animator.AnimatorListener {
         override fun onAnimationRepeat(animation: Animator?) = Unit

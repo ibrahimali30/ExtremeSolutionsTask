@@ -18,7 +18,8 @@ import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.setO
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.CharactersSharedViewModel
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_scrolling.*
+import kotlinx.android.synthetic.main.content_scrolling.*
 import java.util.*
 import javax.inject.Inject
 
@@ -35,14 +36,14 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModel : MarvelCharactersViewModel
 
-    val charactersSharedViewModel by lazy {
+    private val charactersSharedViewModel by lazy {
         ViewModelProvider(this).get(CharactersSharedViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_scrolling)
 
         observeScreenState()
         initSearchView()
@@ -98,20 +99,7 @@ class MainActivity : AppCompatActivity() {
             is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
             else -> {}
         }
-
-//        handleLoadingVisibility(state == MarvelCharactersViewModel.ScreenState.Loading)
-//        handleErrorViewsVisibility(state)
-
     }
-
-    private fun handleErrorViewsVisibility(state: MarvelCharactersViewModel.ScreenState?) {
-//        if (state is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi)
-//            errorViewLayout.visibility = View.VISIBLE
-//        else
-//            errorViewLayout.visibility = View.GONE
-
-    }
-
 
     private fun handleErrorLoadingFromApi(error: Throwable) {
         footerAdapter.showError{

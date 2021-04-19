@@ -10,7 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MainActivity
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MarvelCharacterDetailsActivity
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.SearchAdapter
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.closeSearch
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.CharactersSharedViewModel
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.SearchMarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,9 +58,13 @@ class SearchFragment: Fragment() {
     }
 
     private fun initRecyclerView() {
-        adapter = SearchAdapter(ArrayList())
+        adapter = SearchAdapter(ArrayList(), ::onItemClicked)
         rvSearchResult.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvSearchResult.adapter = adapter
+    }
+
+    private fun onItemClicked(character: Character, viewToTransition: View, viewToTransition2: View) {
+        MarvelCharacterDetailsActivity.startCallingIntent(character, requireActivity(), viewToTransition, viewToTransition2)
     }
 
 
@@ -88,8 +95,10 @@ class SearchFragment: Fragment() {
     }
 
 
-
-
+    override fun onDestroy() {
+        (activity as MainActivity).closeSearch()
+        super.onDestroy()
+    }
     
     
 }

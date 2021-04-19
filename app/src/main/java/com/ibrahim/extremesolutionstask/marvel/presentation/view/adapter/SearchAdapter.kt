@@ -15,11 +15,16 @@ import com.bumptech.glide.request.RequestOptions
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Thumbnail
+import kotlinx.android.synthetic.main.item_marvel_character_discovery.view.*
 import kotlinx.android.synthetic.main.item_marvel_character_search.view.*
+import kotlinx.android.synthetic.main.item_marvel_character_search.view.ivPoster
+import kotlinx.android.synthetic.main.item_marvel_character_search.view.tvItemTitle
 
 
-class SearchAdapter(val data: ArrayList<Character>, val function: (size:Int) -> Unit = {}) :
-    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchAdapter(
+    val data: ArrayList<Character>,
+    val onItemClicked: (character: Character, viewToTransition: View, viewToTransition2: View) -> Unit
+) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     var searchQuery = ""
 
@@ -40,9 +45,11 @@ class SearchAdapter(val data: ArrayList<Character>, val function: (size:Int) -> 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position], searchQuery)
-        if (position > data.size - 4){
-            function(data.size)
+
+        holder.itemView.setOnClickListener {
+            onItemClicked(data[position] , holder.view.ivPoster, holder.view.tvItemTitle)
         }
+
     }
 
     fun setList(list: List<Character>) {
@@ -55,7 +62,7 @@ class SearchAdapter(val data: ArrayList<Character>, val function: (size:Int) -> 
         notifyDataSetChanged()
     }
 
-    class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder constructor(val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(model: Character, searchQuery: String) {
             bindThumbnail(model.thumbnail)

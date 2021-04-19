@@ -38,24 +38,29 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_marvel_character_details)
 
         charachter = intent?.getSerializableExtra(EXTRA_SERIZLIZABLE_OBJECT) as Character
-        bindCharacterData(charachter)
+        bindCharacterData()
 
     }
 
-    private fun bindCharacterData(charachter: Character) {
+    private fun bindCharacterData() {
         Glide.with(this)
             .load(charachter.thumbnail?.getFullThumbnail())
             .into(ivTopImagePoster)
 
         tvListTitle.text = charachter.getCharacterTitle()
-        tvCharacterDescription.text = charachter.description
+
+        if (charachter.description.isNullOrEmpty()){
+            tvCharacterDescription.visibility = View.GONE
+            tvDescription.visibility = View.GONE
+        }else{
+            tvCharacterDescription.text = charachter.description
+        }
 
 
         addListFragment("comics", charachter.id.toString() , 1)
         addListFragment("events", charachter.id.toString() , 2)
         addListFragment("series", charachter.id.toString() , 3)
         addListFragment("stories", charachter.id.toString() , 4)
-
 
     }
 
@@ -80,7 +85,7 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
 
         fun startCallingIntent(
             character: Character,
-            context: AppCompatActivity,
+            context: Activity,
             viewToTransition: View,
             viewToTransition2: View
         ) {

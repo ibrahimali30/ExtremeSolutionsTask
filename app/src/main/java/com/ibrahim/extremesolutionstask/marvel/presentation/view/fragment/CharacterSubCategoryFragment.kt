@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.CharactersHorizontalAdapter
-import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.SearchAdapter
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_sub_category.*
@@ -23,28 +22,26 @@ class CharacterSubCategoryFragment: Fragment() {
 
     @Inject
     lateinit var viewModel : MarvelCharactersViewModel
-
-
     private lateinit var adapter: CharactersHorizontalAdapter
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sub_category, container!!, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         observeScreenState()
         initRecyclerView()
+        init()
+    }
 
+    private fun init() {
         val id = arguments?.getString(EXTRA_CATEGORY_ID) ?: ""
         val name = arguments?.getString(EXTRA_CATEGORY_NAME) ?: ""
         tvListTitle.text = name
         viewModel.getSubMarvelCharachters(id, name)
     }
-
 
     private fun initRecyclerView() {
         adapter = CharactersHorizontalAdapter(ArrayList())
@@ -52,53 +49,52 @@ class CharacterSubCategoryFragment: Fragment() {
         rvCharacterList.adapter = adapter
     }
 
-
     private fun observeScreenState() {
         viewModel.screenState.observe(viewLifecycleOwner , Observer {
             onScreenStateChanged(it)
         })
     }
 
-
     private fun onScreenStateChanged(state: MarvelCharactersViewModel.ScreenState?) {
         when (state) {
+            is MarvelCharactersViewModel.ScreenState.Loading -> handleLoadingVisibility(true)
             is MarvelCharactersViewModel.ScreenState.SuccessAPIResponse -> handleSuccess(state.data)
-            is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
+            is MarvelCharactersViewModel.ScreenState.ErrorLoadingFromApi -> removeCurrentFragment()
             else -> {}
         }
-
-
     }
 
-    private fun handleErrorLoadingFromApi(error: Throwable) {
-
+    private fun handleLoadingVisibility(showLoading: Boolean) {
+        progressBar.visibility = if (showLoading) View.VISIBLE else View.GONE
     }
 
+    private fun removeCurrentFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .remove(this)
+            .commit()
+    }
 
     private fun handleSuccess(data: List<Character>) {
-        adapter.setList(data)
+        if (data.isEmpty()){
+            removeCurrentFragment()
+        }else{
+            handleLoadingVisibility(false)
+            adapter.setList(data)
+        }
     }
-
-
-
 
     companion object{
 
         val EXTRA_CATEGORY_ID = "id"
         val EXTRA_CATEGORY_NAME = "name"
 
-        fun newInstance(
-            id: String,
-            name: String
-        ): CharacterSubCategoryFragment {
-
-            return CharacterSubCategoryFragment().apply {
+        fun newInstance(id: String, name: String): CharacterSubCategoryFragment =
+            CharacterSubCategoryFragment().apply {
                 arguments = Bundle().apply {
-                    putString(EXTRA_CATEGORY_NAME , name)
-                    putString(EXTRA_CATEGORY_ID , id)
+                    putString(EXTRA_CATEGORY_NAME, name)
+                    putString(EXTRA_CATEGORY_ID, id)
                 }
             }
-        }
     }
     
 }
