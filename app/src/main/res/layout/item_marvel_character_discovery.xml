@@ -15,6 +15,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:transitionName="tr"
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/bg_search_radius"
             android:background="#000"
@@ -44,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:transitionName="tr2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/itemBlurView"
             app:layout_constraintStart_toStartOf="@+id/itemBlurView"

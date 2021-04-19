@@ -114,8 +114,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun onItemClicked(character: Character, viewToTransition: View) {
-        MarvelCharacterDetailsActivity.startCallingIntent(character, this, viewToTransition)
+    private fun onItemClicked(character: Character, viewToTransition: View, viewToTransition2: View) {
+        MarvelCharacterDetailsActivity.startCallingIntent(character, this, viewToTransition, viewToTransition2)
     }
 
     private fun onScrollToEnd(offSet: Int) {

@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 class ForecastAdapter(
     val data: ArrayList<Character>,
     val function: (size: Int) -> Unit = {},
-    val onItemClicked: (character: Character, viewToTransition: View) -> Unit
+    val onItemClicked: (character: Character, viewToTransition: View, viewToTransition2: View) -> Unit
 ) : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
 
 
@@ -44,7 +44,7 @@ class ForecastAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            onItemClicked(data[position] , holder.view)
+            onItemClicked(data[position] , holder.view.ivPoster, holder.view.tvItemTitle)
         }
     }
 

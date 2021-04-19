@@ -1,24 +1,28 @@
 package com.ibrahim.extremesolutionstask.marvel.presentation.view.activity
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Pair
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.bumptech.glide.Glide
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MainActivity_MembersInjector.create
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MarvelCharacterDetailsActivity_MembersInjector.create
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.fragment.CharacterSubCategoryFragment
-import com.ibrahim.extremesolutionstask.marvel.presentation.view.fragment.SearchFragment
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_marvel_character_details.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MarvelCharacterDetailsActivity : AppCompatActivity() {
@@ -34,11 +38,11 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_marvel_character_details)
 
         charachter = intent?.getSerializableExtra(EXTRA_SERIZLIZABLE_OBJECT) as Character
-        bindCharachterData(charachter)
+        bindCharacterData(charachter)
 
     }
 
-    private fun bindCharachterData(charachter: Character) {
+    private fun bindCharacterData(charachter: Character) {
         Glide.with(this)
             .load(charachter.thumbnail?.getFullThumbnail())
             .into(ivTopImagePoster)
@@ -73,19 +77,24 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
     companion object{
 
         val EXTRA_SERIZLIZABLE_OBJECT = "character"
+
         fun startCallingIntent(
             character: Character,
             context: AppCompatActivity,
-            viewToTransition: View
+            viewToTransition: View,
+            viewToTransition2: View
         ) {
-            val activityOptionsCompat =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(context, viewToTransition, "tr")
-            val intent: Intent = Intent(
+            val options = ActivityOptions.makeSceneTransitionAnimation(
                 context,
-                MarvelCharacterDetailsActivity::class.java
+                Pair(viewToTransition, "tr"),
+                Pair(viewToTransition2, "tr2")
             )
-            intent.putExtra(EXTRA_SERIZLIZABLE_OBJECT, character)
-            context.startActivity (intent, activityOptionsCompat.toBundle())
+
+            val intent2 = Intent(context, MarvelCharacterDetailsActivity::class.java)
+            intent2.putExtra(EXTRA_SERIZLIZABLE_OBJECT, character)
+
+            context.startActivity(intent2, options.toBundle())
+
         }
     }
 }

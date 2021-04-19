@@ -36,14 +36,26 @@
 
 
             <TextView
+                android:layout_marginVertical="28dp"
                 android:id="@+id/tvListTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:text="Description"
+                android:transitionName="tr2"
+                />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
                 android:textColor="@color/teal_200"
                 android:textStyle="bold"
-                tools:text="Series"
+                android:text="Description"
                 />
 
 
