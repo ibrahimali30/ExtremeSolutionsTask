@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
+import com.google.android.material.shape.CornerFamily
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MainActivity_MembersInjector.create
@@ -43,6 +44,14 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
     }
 
     private fun bindCharacterData() {
+
+        ivTopImagePoster.shapeAppearanceModel =
+            ivTopImagePoster.shapeAppearanceModel
+            .toBuilder()
+            .setBottomLeftCorner(CornerFamily.ROUNDED,40f)
+            .setBottomRightCorner(CornerFamily.ROUNDED,40f)
+            .build();
+
         Glide.with(this)
             .load(charachter.thumbnail?.getFullThumbnail())
             .into(ivTopImagePoster)
