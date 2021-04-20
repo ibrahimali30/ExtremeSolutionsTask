@@ -23,7 +23,19 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.ExtremeSolutionsTask.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.ExtremeSolutionsTask.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="SearchAutoCompleteTextView">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textColorHint">#fff</item>
+        <item name="android:editTextColor">#fff</item>
+        <item name="android:background">#00000000</item>
+    </style>
+
+    <style name="search">
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+
+    </style>
+
+
 </resources>
