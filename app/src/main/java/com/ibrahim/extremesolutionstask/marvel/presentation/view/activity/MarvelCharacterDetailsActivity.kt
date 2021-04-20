@@ -40,7 +40,7 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
 
         charachter = intent?.getSerializableExtra(EXTRA_SERIZLIZABLE_OBJECT) as Character
         bindCharacterData()
-
+        root.transitionToState(R.id.end)
     }
 
     private fun bindCharacterData() {
