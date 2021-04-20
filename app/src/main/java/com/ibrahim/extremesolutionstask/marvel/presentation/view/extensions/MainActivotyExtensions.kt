@@ -34,20 +34,6 @@ fun MainActivity.openSearch() {
 }
 
 
-fun SearchView.setOnTextChanged(function: (quertText:String) -> Unit) {
-
-    setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            return false
-        }
-
-        override fun onQueryTextChange(newText: String): Boolean {
-            function(newText)
-            return false
-        }
-    })
-}
-
 
  fun MainActivity.closeSearch() {
     supportFragmentManager.popBackStack()

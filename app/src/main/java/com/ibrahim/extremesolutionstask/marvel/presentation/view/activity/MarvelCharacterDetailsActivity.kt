@@ -13,14 +13,18 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.CornerFamily
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MainActivity_MembersInjector.create
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MarvelCharacterDetailsActivity_MembersInjector.create
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.setCornerRadius
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.fragment.CharacterSubCategoryFragment
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.activity_marvel_character_details.*
 import javax.inject.Inject
 
@@ -40,21 +44,22 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
 
         charachter = intent?.getSerializableExtra(EXTRA_SERIZLIZABLE_OBJECT) as Character
         bindCharacterData()
-        root.transitionToState(R.id.end)
+
     }
 
     private fun bindCharacterData() {
 
-        ivTopImagePoster.shapeAppearanceModel =
-            ivTopImagePoster.shapeAppearanceModel
-            .toBuilder()
-            .setBottomLeftCorner(CornerFamily.ROUNDED,40f)
-            .setBottomRightCorner(CornerFamily.ROUNDED,40f)
-            .build();
+        ivTopImagePoster.setCornerRadius()
+        blurView.setCornerRadius()
 
         Glide.with(this)
             .load(charachter.thumbnail?.getFullThumbnail())
             .into(ivTopImagePoster)
+
+        Glide.with(this)
+            .load(charachter.thumbnail?.getFullThumbnail())
+            .apply(RequestOptions.bitmapTransform(BlurTransformation(10, 3)))
+            .into(blurView)
 
         tvListTitle.text = charachter.getCharacterTitle()
 

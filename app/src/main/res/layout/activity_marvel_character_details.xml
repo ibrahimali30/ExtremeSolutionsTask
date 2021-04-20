@@ -20,7 +20,7 @@
         android:layout_height="0dp"
         android:id="@+id/guideline"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.13" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:transitionName="tr"
@@ -35,24 +35,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.cardview.widget.CardView
-        android:backgroundTint="#6D223344"
-        tools:visibility="visible"
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/blurView"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="@id/ivTopImagePoster"
         app:layout_constraintBottom_toBottomOf="@id/ivTopImagePoster"
-        app:cardCornerRadius="16dp"
-        >
-        <com.github.mmin18.widget.RealtimeBlurView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:realtimeBlurRadius="20dp"
-            app:realtimeOverlayColor="#8000" />
+        android:layout_alignParentTop="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.cardview.widget.CardView>
-
+    <ImageView
+        android:background="@drawable/bg_back_radius"
+        android:id="@+id/ivBackArrow"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_chevron_left_24"
+        android:layout_marginTop="80dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
@@ -66,7 +68,8 @@
         <LinearLayout
             android:id="@+id/llVodRowFragmentContainers"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="100dp"
             android:orientation="vertical" >
 
 

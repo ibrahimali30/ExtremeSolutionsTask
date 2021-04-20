@@ -1,6 +1,8 @@
 package com.ibrahim.extremesolutionstask.marvel.presentation.view.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +20,12 @@ import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.setO
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.CharactersSharedViewModel
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_scrolling.*
-import kotlinx.android.synthetic.main.content_scrolling.*
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -32,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ForecastAdapter
     private lateinit var concatAdapter: ConcatAdapter
     private var footerAdapter = FooterLoadingAdapter()
+    private val searchQueryRx by lazy { BehaviorSubject.create<String>() }
 
     @Inject
     lateinit var viewModel : MarvelCharactersViewModel
@@ -39,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private val charactersSharedViewModel by lazy {
         ViewModelProvider(this).get(CharactersSharedViewModel::class.java)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,9 +87,19 @@ class MainActivity : AppCompatActivity() {
         rvForecast.adapter = concatAdapter
     }
 
+    @SuppressLint("CheckResult")
     private fun initSearchView() {
+        searchQueryRx
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                Log.d(TAG, "initSearchView: $it")
+                charactersSharedViewModel.searchQueryLiveData.postValue(it)
+            }
+
         searchView.setOnTextChanged{newText ->
-            charactersSharedViewModel.searchQueryLiveData.value = newText
+            searchQueryRx.onNext(newText)
         }
     }
 

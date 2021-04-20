@@ -49,6 +49,13 @@
             motion:layout_constraintBottom_toTopOf="@+id/guideline"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:layout_height="40dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/guideline"
+            motion:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="60dp"
+            android:id="@+id/ivBackArrow"
+            android:layout_marginBottom="16dp"/>
 
     </ConstraintSet>
 
