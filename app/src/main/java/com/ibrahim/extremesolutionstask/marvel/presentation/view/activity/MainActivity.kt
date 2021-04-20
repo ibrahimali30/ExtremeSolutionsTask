@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("CheckResult")
     private fun initSearchView() {
         searchQueryRx
-            .debounce(300, TimeUnit.MILLISECONDS)
+            .debounce(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {

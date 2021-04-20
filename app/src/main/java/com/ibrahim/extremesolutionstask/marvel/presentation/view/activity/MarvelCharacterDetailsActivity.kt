@@ -116,4 +116,6 @@ class MarvelCharacterDetailsActivity : AppCompatActivity() {
 
         }
     }
+
+    fun onBackPressed(view: View) = onBackPressed()
 }

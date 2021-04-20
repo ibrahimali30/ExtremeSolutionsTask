@@ -16,7 +16,7 @@ interface MarvelApiService {
         @Query("hash") hash:String = "",
         @Query("nameStartsWith") nameStartsWith:String? = null,
         @Query("offset") offset:Int = 0,
-        @Query("limit") limit:Int = 5
+        @Query("limit") limit:Int = 10
     ): Single<MarvelResponse>
 
 

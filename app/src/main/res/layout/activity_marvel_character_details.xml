@@ -47,8 +47,9 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:background="@drawable/bg_back_radius"
         android:id="@+id/ivBackArrow"
+        android:onClick="onBackPressed"
+        android:background="@drawable/bg_back_radius"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_baseline_chevron_left_24"
@@ -92,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:textColor="@color/teal_200"
+                android:textColor="@color/pink"
                 android:textStyle="bold"
                 android:text="Description"
                 />
