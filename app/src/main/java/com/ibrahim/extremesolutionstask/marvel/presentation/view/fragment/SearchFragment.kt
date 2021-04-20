@@ -18,6 +18,8 @@ import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.Characters
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.SearchMarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_search.progressBar
+import kotlinx.android.synthetic.main.fragment_sub_category.*
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -82,13 +84,16 @@ class SearchFragment: Fragment() {
             else -> {}
         }
 
-
+        handleLoadingVisibility(state == SearchMarvelCharactersViewModel.SearchScreenState.Loading)
     }
 
     private fun handleErrorLoadingFromApi(error: Throwable) {
 
     }
 
+    private fun handleLoadingVisibility(showLoading: Boolean) {
+        progressBar.visibility = if (showLoading) View.VISIBLE else View.GONE
+    }
 
     private fun handleSuccess(data: List<Character>) {
         adapter.setList(data)
