@@ -6,7 +6,7 @@ import android.view.ViewAnimationUtils
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.HomeActivity
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.fragment.SearchFragment
-import kotlinx.android.synthetic.main.activity_scrolling.*
+import kotlinx.android.synthetic.main.activity_home.*
 
 fun HomeActivity.openSearch() {
     searchView.setQuery("" , false)

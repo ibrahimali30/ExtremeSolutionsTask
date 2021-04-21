@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.android.synthetic.main.activity_scrolling.*
+import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-        setContentView(R.layout.activity_scrolling)
+        setContentView(R.layout.activity_home)
 
         observeScreenState()
         initSearchView()
@@ -91,6 +91,7 @@ class HomeActivity : AppCompatActivity() {
     private fun initSearchView() {
         searchQueryRx
             .debounce(500, TimeUnit.MILLISECONDS)
+            .filter { it.isNotEmpty() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
