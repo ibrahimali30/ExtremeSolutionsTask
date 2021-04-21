@@ -13,7 +13,8 @@ import com.ibrahim.extremesolutionstask.marvel.data.model.character.Thumbnail
 import kotlinx.android.synthetic.main.item_marver_character_horizontal.view.*
 import kotlin.collections.ArrayList
 
-class CharactersHorizontalAdapter(val data: ArrayList<Character>, val function: (size:Int) -> Unit = {}) :
+class CharactersHorizontalAdapter(val data: ArrayList<Character>,
+                                  val function: (imageurl:String , View: View) -> Unit) :
     RecyclerView.Adapter<CharactersHorizontalAdapter.ViewHolder>() {
 
 
@@ -35,8 +36,9 @@ class CharactersHorizontalAdapter(val data: ArrayList<Character>, val function: 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
-        if (position > data.size - 4) {
-            function(data.size)
+
+        holder.view.setOnClickListener {
+            function(data[position].thumbnail?.getFullThumbnail()?:"" , holder.view.ivPoster)
         }
     }
 
@@ -50,7 +52,7 @@ class CharactersHorizontalAdapter(val data: ArrayList<Character>, val function: 
         notifyDataSetChanged()
     }
 
-    class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder constructor(val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(model: Character) {
             bindThmbnail(model.thumbnail)
@@ -66,7 +68,7 @@ class CharactersHorizontalAdapter(val data: ArrayList<Character>, val function: 
             glideApp.apply(requestOptions)
                 .apply(RequestOptions().transform(RoundedCorners(10)))
                 .placeholder(R.drawable.bg_search_radius)
-                .into(itemView.ivPoster)
+                .into(view.ivPoster)
         }
     }
 }

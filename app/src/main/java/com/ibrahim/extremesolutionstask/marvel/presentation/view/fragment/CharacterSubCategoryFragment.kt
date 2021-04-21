@@ -9,11 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.ImageFullScreenActivity
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.CharactersHorizontalAdapter
 import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.MarvelCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_sub_category.*
-import java.util.ArrayList
+import java.util.*
 import javax.inject.Inject
 
 
@@ -44,9 +45,13 @@ class CharacterSubCategoryFragment: Fragment() {
     }
 
     private fun initRecyclerView() {
-        adapter = CharactersHorizontalAdapter(ArrayList())
+        adapter = CharactersHorizontalAdapter(ArrayList(), ::onComicClicked)
         rvCharacterList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rvCharacterList.adapter = adapter
+    }
+
+    private fun onComicClicked(imageurl: String, view: View) {
+        ImageFullScreenActivity.startCallingIntent(imageurl, requireActivity(), view)
     }
 
     private fun observeScreenState() {
