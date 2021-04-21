@@ -52,10 +52,16 @@ class SearchFragment: Fragment() {
 
     private fun initSearchView() {
         charactersSharedViewModel.searchQueryLiveData.observe(viewLifecycleOwner , Observer {
-            adapter.clear()
-            adapter.searchQuery = it
-            viewModel.getMarvelCharachters(it)
+            onSearchQueryChanged(it)
         })
+    }
+
+    private fun onSearchQueryChanged(it: String?) {
+        it ?: return
+        adapter.clear()
+        adapter.searchQuery = it
+        if (it.isNotEmpty())
+            viewModel.getMarvelCharachters(it)
     }
 
     private fun initRecyclerView() {
@@ -101,6 +107,7 @@ class SearchFragment: Fragment() {
 
     override fun onDestroy() {
         (activity as HomeActivity).closeSearch()
+        charactersSharedViewModel.searchQueryLiveData.value = ""
         super.onDestroy()
     }
     

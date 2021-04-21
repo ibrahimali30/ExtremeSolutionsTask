@@ -91,7 +91,6 @@ class HomeActivity : AppCompatActivity() {
     private fun initSearchView() {
         searchQueryRx
             .debounce(500, TimeUnit.MILLISECONDS)
-            .filter { it.isNotEmpty() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
