@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
-import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MainActivity
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.HomeActivity
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MarvelCharacterDetailsActivity
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.SearchAdapter
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.closeSearch
@@ -19,7 +19,6 @@ import com.ibrahim.extremesolutionstask.marvel.presentation.viewmodel.SearchMarv
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.progressBar
-import kotlinx.android.synthetic.main.fragment_sub_category.*
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -101,7 +100,7 @@ class SearchFragment: Fragment() {
 
 
     override fun onDestroy() {
-        (activity as MainActivity).closeSearch()
+        (activity as HomeActivity).closeSearch()
         super.onDestroy()
     }
     

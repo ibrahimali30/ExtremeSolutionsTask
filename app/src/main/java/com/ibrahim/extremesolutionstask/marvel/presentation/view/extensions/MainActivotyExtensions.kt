@@ -3,13 +3,12 @@ package com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions
 import android.animation.Animator
 import android.view.View
 import android.view.ViewAnimationUtils
-import androidx.appcompat.widget.SearchView
 import com.ibrahim.extremesolutionstask.R
-import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.MainActivity
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.activity.HomeActivity
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.fragment.SearchFragment
 import kotlinx.android.synthetic.main.activity_scrolling.*
 
-fun MainActivity.openSearch() {
+fun HomeActivity.openSearch() {
     searchView.setQuery("" , false)
     cardView.visibility = View.VISIBLE
     blurView.visibility = View.VISIBLE
@@ -35,7 +34,7 @@ fun MainActivity.openSearch() {
 
 
 
- fun MainActivity.closeSearch() {
+ fun HomeActivity.closeSearch() {
     supportFragmentManager.popBackStack()
     blurView.visibility = View.INVISIBLE
 

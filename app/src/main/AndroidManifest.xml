@@ -13,14 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExtremeSolutionsTask"
         android:usesCleartextTraffic="true">
-            <activity android:name=".marvel.presentation.view.activity.MarvelCharacterDetailsActivity" />
-            <activity android:name=".marvel.presentation.view.activity.ImageFullScreenActivity" />
-        <activity android:name=".marvel.presentation.view.activity.MainActivity">
+        <activity android:name=".marvel.presentation.view.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".marvel.presentation.view.activity.MarvelCharacterDetailsActivity" />
+        <activity android:name=".marvel.presentation.view.activity.ImageFullScreenActivity" />
+        <activity android:name=".marvel.presentation.view.activity.HomeActivity">
+
         </activity>
     </application>
 

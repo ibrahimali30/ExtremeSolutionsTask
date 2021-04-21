@@ -1,6 +1,5 @@
-package com.ibrahim.orcastask.forcast.presentation.di
+package com.ibrahim.extremesolutionstask.marvel.presentation.di
 
-import android.util.Log
 import com.ibrahim.extremesolutionstask.marvel.data.repository.MarvelRepositoryImpl
 import com.ibrahim.extremesolutionstask.marvel.data.source.remote.MarvelApiService
 import com.ibrahim.extremesolutionstask.marvel.domain.repsitory.MarvelRepository

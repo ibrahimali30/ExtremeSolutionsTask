@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.extremesolutionstask.R
 import com.ibrahim.extremesolutionstask.marvel.data.model.character.Character
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.FooterLoadingAdapter
-import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.ForecastAdapter
+import com.ibrahim.extremesolutionstask.marvel.presentation.view.adapter.HomeCharacterAdapter
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.closeSearch
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.openSearch
 import com.ibrahim.extremesolutionstask.marvel.presentation.view.extensions.setOnTextChanged
@@ -30,11 +30,11 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     val TAG = "Looog"
 
-    private lateinit var adapter: ForecastAdapter
+    private lateinit var adapter: HomeCharacterAdapter
     private lateinit var concatAdapter: ConcatAdapter
     private var footerAdapter = FooterLoadingAdapter()
     private val searchQueryRx by lazy { BehaviorSubject.create<String>() }
@@ -81,9 +81,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        adapter = ForecastAdapter(ArrayList() , ::onScrollToEnd, ::onItemClicked)
+        adapter = HomeCharacterAdapter(ArrayList() , ::onScrollToEnd, ::onItemClicked)
         concatAdapter = ConcatAdapter(adapter, footerAdapter)
-        rvForecast.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+        rvForecast.layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.VERTICAL, false)
         rvForecast.adapter = concatAdapter
     }
 

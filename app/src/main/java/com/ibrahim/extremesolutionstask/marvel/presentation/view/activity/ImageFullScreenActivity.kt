@@ -16,35 +16,10 @@ import kotlinx.android.synthetic.main.activity_full_image_viewer.*
 
 class ImageFullScreenActivity : AppCompatActivity() {
 
-    private val gestureDetector: GestureDetector by lazy {
-        GestureDetector(this, object : GestureDetector.OnGestureListener {
-            override fun onDown(e: MotionEvent): Boolean {
-                return true
-            }
-
-            override fun onShowPress(e: MotionEvent) {}
-            override fun onSingleTapUp(e: MotionEvent): Boolean {
-                return false
-            }
-
-            override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
-                val builder = View.DragShadowBuilder(imageView)
-                imageView.startDrag(null, builder, null, 0)
-                Log.d("TAG", "onScroll: X: " + distanceX + "Y: " + distanceY)
-                return true
-            }
-
-            override fun onLongPress(e: MotionEvent) {}
-            override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-                return false
-            }
-        })
-    }
-
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         setContentView(R.layout.activity_full_image_viewer)
 
 
@@ -71,6 +46,32 @@ class ImageFullScreenActivity : AppCompatActivity() {
         }
 
 
+    }
+
+
+    private val gestureDetector: GestureDetector by lazy {
+        GestureDetector(this, object : GestureDetector.OnGestureListener {
+            override fun onDown(e: MotionEvent): Boolean {
+                return true
+            }
+
+            override fun onShowPress(e: MotionEvent) {}
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                return false
+            }
+
+            override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
+                val builder = View.DragShadowBuilder(imageView)
+                imageView.startDrag(null, builder, null, 0)
+                Log.d("TAG", "onScroll: X: " + distanceX + "Y: " + distanceY)
+                return true
+            }
+
+            override fun onLongPress(e: MotionEvent) {}
+            override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+                return false
+            }
+        })
     }
 
 

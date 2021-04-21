@@ -13,11 +13,11 @@ import com.ibrahim.extremesolutionstask.marvel.data.model.character.Thumbnail
 import kotlinx.android.synthetic.main.item_marvel_character_discovery.view.*
 import kotlin.collections.ArrayList
 
-class ForecastAdapter(
+class HomeCharacterAdapter(
     val data: ArrayList<Character>,
     val function: (size: Int) -> Unit = {},
     val onItemClicked: (character: Character, viewToTransition: View, viewToTransition2: View) -> Unit
-) : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<HomeCharacterAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(
