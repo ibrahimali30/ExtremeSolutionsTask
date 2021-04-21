@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ExtremeSolutionsTask</string>
+
+    <string name="cancel">الغاء</string>
+    <string name="description">الوصف</string>
+    <string name="something_went_wrong">حدث خظأ ما</string>
+    <string name="retry">اعادة المحاولة</string>
+</resources>

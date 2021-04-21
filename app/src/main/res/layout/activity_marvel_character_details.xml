@@ -83,7 +83,7 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="24sp"
-                android:text="Description"
+                tools:text="titlr"
                 android:transitionName="tr2"
                 />
 
@@ -95,7 +95,7 @@
                 android:layout_marginStart="16dp"
                 android:textColor="@color/pink"
                 android:textStyle="bold"
-                android:text="Description"
+                android:text="@string/description"
                 />
 
 

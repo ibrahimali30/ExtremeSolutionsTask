@@ -11,12 +11,11 @@
     <TextView
         android:id="@+id/tvDay"
         android:textColor="@color/white"
-        tools:textColor="@color/black"
         android:layout_marginTop="32dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Something went wrong"
+        android:text="@string/something_went_wrong"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +30,6 @@
         android:id="@+id/btRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Retry"/>
+        android:text="@string/retry"/>
 
 </LinearLayout>

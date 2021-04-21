@@ -40,7 +40,7 @@
             android:id="@+id/tvItemTitle"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="Spider man"
+            tools:text="Spider man"
             android:textColor="#fff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
