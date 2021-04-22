@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class GetMarvelUseCase @Inject constructor(private val marvelRepository: MarvelRepository) {
 
-    fun fetchMarvel(cityName: MarvelParams) = marvelRepository.fetchMarvel(cityName)
+    fun fetchMarvel(params: MarvelParams) = marvelRepository.fetchMarvel(params)
 
-    fun fetchMarvelSubCategories(cityName: MarvelParams) = marvelRepository.fetchMarvelSubCategories(cityName)
+    fun fetchMarvelSubCategories(params: MarvelParams) = marvelRepository.fetchMarvelSubCategories(params)
 
 }

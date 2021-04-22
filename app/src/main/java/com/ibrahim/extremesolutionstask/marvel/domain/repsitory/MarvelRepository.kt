@@ -6,6 +6,6 @@ import com.ibrahim.extremesolutionstask.marvel.domain.entity.MarvelParams
 import io.reactivex.Single
 
 interface MarvelRepository {
-    fun fetchMarvel(cityName: MarvelParams): Single<MarvelResponse>
-    fun fetchMarvelSubCategories(cityName: MarvelParams): Single<MarvelResponse>
+    fun fetchMarvel(params: MarvelParams): Single<MarvelResponse>
+    fun fetchMarvelSubCategories(params: MarvelParams): Single<MarvelResponse>
 }
